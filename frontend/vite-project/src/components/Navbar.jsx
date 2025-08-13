@@ -6,6 +6,7 @@ import {
   IconButton,
   Heading,
   HStack,
+  Spacer,
   Link as ChakraLink,
   useColorModeValue,
 } from '@chakra-ui/react';
@@ -15,11 +16,25 @@ import { Link as RouterLink } from 'react-router-dom';
 function Navbar({ onToggleSidebar }) {
   const bg = useColorModeValue('white', 'gray.900');
   const borderColor = useColorModeValue('gray.200', 'gray.700');
+  const linkColor = useColorModeValue('gray.700', 'gray.100');
+  const hoverColor = useColorModeValue('blue.500', 'blue.300');
+
+  const navLinks = [
+    { name: 'Dashboard', to: '/dashboard' },
+    { name: 'Invoices', to: '/invoices' },
+    { name: 'Customers', to: '/customers' },
+    { name: 'Settings', to: '/settings' },
+    { name: 'Solutions', to: '/solutions' },
+    { name: 'Features', to: '/features' },
+    { name: 'Partner With Us', to: '/partners' },
+    { name: 'Resources', to: '/resources' },
+    { name: 'Pricing', to: '/pricing' },
+  ];
 
   return (
     <Box
       bg={bg}
-      px={4}
+      px={{ base: 4, md: 8 }}
       py={3}
       borderBottom="1px"
       borderColor={borderColor}
@@ -28,8 +43,8 @@ function Navbar({ onToggleSidebar }) {
       top="0"
       zIndex="1000"
     >
-      <Flex justify="space-between" align="center">
-        {/* Hamburger Icon */}
+      <Flex align="center">
+        {/* Left: Sidebar toggle */}
         <IconButton
           aria-label="Toggle Sidebar"
           icon={<HamburgerIcon />}
@@ -37,28 +52,37 @@ function Navbar({ onToggleSidebar }) {
           variant="ghost"
           size="md"
           mr={2}
+          display={{ base: 'flex', md: 'none' }}
         />
 
-        {/* Brand Title */}
-        <Heading size="md" color="blue.500">
+        {/* Logo */}
+        <Heading size="md" color="blue.500" mr={6}>
           📘 StarkBooks
         </Heading>
 
-        {/* Desktop Navigation */}
-        <HStack as="nav" spacing={6} display={{ base: 'none', md: 'flex' }}>
-          <ChakraLink as={RouterLink} to="/" fontWeight="medium">
-            Dashboard
-          </ChakraLink>
-          <ChakraLink as={RouterLink} to="/invoices" fontWeight="medium">
-            Invoices
-          </ChakraLink>
-          <ChakraLink as={RouterLink} to="/customers" fontWeight="medium">
-            Customers
-          </ChakraLink>
-          <ChakraLink as={RouterLink} to="/settings" fontWeight="medium">
-            Settings
-          </ChakraLink>
+        {/* Center Nav */}
+        <HStack
+          as="nav"
+          spacing={5}
+          display={{ base: 'none', md: 'flex' }}
+        >
+          {navLinks.map((link) => (
+            <ChakraLink
+              as={RouterLink}
+              to={link.to}
+              key={link.name}
+              fontWeight="medium"
+              color={linkColor}
+              _hover={{ color: hoverColor }}
+            >
+              {link.name}
+            </ChakraLink>
+          ))}
         </HStack>
+
+        <Spacer />
+
+        {/* Right: Removed Sign In / Sign Up */}
       </Flex>
     </Box>
   );

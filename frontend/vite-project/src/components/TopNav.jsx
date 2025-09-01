@@ -7,8 +7,6 @@ function TopNav() {
   const location = useLocation();
 
   const navLinks = [
-    { /*label: "Dashboard", to: "/dashboard" */},
-    { label: "CRM", to: "/crm" },
     { label: "Inventory", to: "/inventory" },
     { label: "Mail", to: "/mail" },
     { label: "Reports", to: "/reports" },

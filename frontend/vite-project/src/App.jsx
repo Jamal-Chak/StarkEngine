@@ -1,3 +1,4 @@
+// src/App.jsx
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { Box, Flex, Text } from "@chakra-ui/react";
@@ -13,14 +14,8 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
 
+// Main app layout
 function Layout({ children, isSidebarOpen, toggleSidebar, apiStatus }) {
-  const location = useLocation();
-  const isCRM = location.pathname.startsWith("/crm");
-
-  if (isCRM) {
-    return children; // Render CRM layout directly (it has its own Sidebar from components/crm/Sidebar)
-  }
-
   return (
     <Flex direction="column" height="100vh">
       <TopNav />
@@ -58,6 +53,7 @@ function AppContent() {
       });
   }, []);
 
+  // Minimal layout (no sidebar/topnav/footer) for public pages
   const isMinimalLayout = ["/", "/login", "/signup"].includes(location.pathname);
 
   return (

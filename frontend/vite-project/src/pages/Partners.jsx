@@ -18,9 +18,9 @@ function Partners() {
     <Box p={6}>
       <Stack spacing={6} align="center">
         <Heading size="xl">Partner With Us</Heading>
-        <Text fontSize="lg" textAlign="center" maxW="lg">
-          Join the StarkBooks partner network. Together, we empower businesses to manage their finances smarter.
-        </Text>
+          <Text fontSize="lg" textAlign="center" maxW="lg">
+            Join the TwineBooks partner network. Together, we empower businesses to manage their finances smarter.
+          </Text>
         <Button colorScheme="blue" size="lg">
           Become a Partner
         </Button>
@@ -28,7 +28,7 @@ function Partners() {
 
       <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} mt={10}>
         <Box bg={bg} p={6} borderRadius="md" shadow="md">
-          <Heading size="md" mb={4}>Why Partner with StarkBooks?</Heading>
+            <Heading size="md" mb={4}>Why Partner with TwineBooks?</Heading>
           <Text mb={2}>🔧 Expert support and training for your clients.</Text>
           <Text mb={2}>📈 Co-marketing opportunities to grow together.</Text>
           <Text>🤝 Exclusive partner incentives and rewards.</Text>
@@ -50,9 +50,9 @@ function Partners() {
           borderRadius="md"
           mx="auto"
         />
-        <Text mt={4} color="gray.500">
-          Join countless other professionals in delivering next‑generation accounting powered by StarkBooks.
-        </Text>
+          <Text mt={4} color="gray.500">
+            Join countless other professionals in delivering next‑generation accounting powered by TwineBooks.
+          </Text>
       </Box>
     </Box>
   );

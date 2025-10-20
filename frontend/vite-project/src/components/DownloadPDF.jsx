@@ -10,15 +10,15 @@ function DownloadPDF({ transactions = [], totals = {} }) {
     const doc = new jsPDF();
 
     // 🔹 Title & Meta
-    doc.setProperties({
-      title: 'StarkBooks Financial Summary',
-      subject: 'Financial Summary Report',
-      author: 'StarkBooks',
-    });
+        doc.setProperties({
+          title: 'TwineBooks Financial Summary',
+          subject: 'Financial Summary Report',
+          author: 'TwineBooks',
+        });
 
     // 🔹 Header
     doc.setFontSize(18);
-    doc.text('📘 StarkBooks Financial Summary', 14, 20);
+        doc.text('📘 TwineBooks Financial Summary', 14, 20);
 
     // 🔹 Summary Section
     doc.setFontSize(12);
@@ -53,7 +53,7 @@ function DownloadPDF({ transactions = [], totals = {} }) {
       doc.lastAutoTable?.finalY + 10 || 120
     );
 
-    doc.save('StarkBooks-Financial-Summary.pdf');
+        doc.save('TwineBooks-Financial-Summary.pdf');
   };
 
   return (

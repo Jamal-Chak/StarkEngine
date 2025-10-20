@@ -3,9 +3,9 @@
 import React, { useState } from 'react';
 import {
   Box, Button, Input, Select, Textarea, Heading,
-  FormControl, FormLabel, VStack, HStack
+  FormControl, FormLabel, VStack, HStack, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, Spinner
 } from '@chakra-ui/react';
-import { createInvoice } from '../services/api';
+import { createInvoice, draftInvoice, getAIJobStatus } from '../services/api';
 import dayjs from 'dayjs';
 
 const CreateInvoice = () => {
@@ -39,6 +39,47 @@ const CreateInvoice = () => {
   const handleSubmit = async () => {
     await createInvoice(form);
     alert('✅ Invoice Created!');
+  };
+
+  // AI draft state
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [aiDraft, setAiDraft] = useState('');
+  const [aiStatus, setAiStatus] = useState(null);
+
+  const handleDraftWithAI = async () => {
+    const payload = {
+      to_name: form.client,
+      items: form.items.map(i => ({ desc: i.description, qty: i.quantity, price: i.rate })),
+      notes: form.notes
+    };
+
+    try {
+      const res = await draftInvoice(payload);
+      const { job_id } = res.data;
+      setAiStatus('queued');
+      onOpen();
+
+      // poll for status
+      const poll = setInterval(async () => {
+        try {
+          const statusRes = await getAIJobStatus(job_id);
+          const data = statusRes.data;
+          setAiStatus(data.status);
+          if (data.status === 'finished' || data.status === 'failed') {
+            clearInterval(poll);
+            setAiDraft(data.result || '');
+          }
+        } catch (err) {
+          console.error('Polling error', err);
+          clearInterval(poll);
+          setAiStatus('error');
+        }
+      }, 1500);
+
+    } catch (err) {
+      console.error('AI Draft error', err);
+      alert('Failed to request AI draft');
+    }
   };
 
   return (
@@ -125,8 +166,28 @@ const CreateInvoice = () => {
           </FormControl>
         </Box>
 
-        <Button colorScheme="blue" mt={4} onClick={handleSubmit}>Save Invoice</Button>
+        <HStack spacing={3} mt={4}>
+          <Button colorScheme="blue" onClick={handleSubmit}>Save Invoice</Button>
+          <Button colorScheme="teal" variant="outline" onClick={handleDraftWithAI}>Draft with AI</Button>
+        </HStack>
       </VStack>
+      {/* AI Draft Modal */}
+      <Modal isOpen={isOpen} onClose={onClose} size="xl">
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>AI Draft Preview</ModalHeader>
+          <ModalBody>
+            {aiStatus === 'queued' && <Box><Spinner mr={2}/>Queued — generating...</Box>}
+            {aiStatus === 'started' && <Box><Spinner mr={2}/>In progress...</Box>}
+            {(aiStatus === 'finished' || aiStatus === 'failed' || aiStatus === 'error') && (
+              <Textarea value={aiDraft} minH="200px" readOnly />
+            )}
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={onClose}>Close</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 };

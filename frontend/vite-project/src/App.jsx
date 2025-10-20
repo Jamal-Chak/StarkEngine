@@ -10,11 +10,15 @@ import Footer from "./components/Footer";
 import MainRoutes from "./MainRoutes";
 import { pingBackend } from "./services/api";
 
+// Pages
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
 
-// Main app layout
+// ✅ Import axios instance + csrf fetcher
+import { getCsrfToken } from "./api/axios";
+
+// Layout for authenticated pages
 function Layout({ children, isSidebarOpen, toggleSidebar, apiStatus }) {
   return (
     <Flex direction="column" height="100vh">
@@ -42,43 +46,44 @@ function AppContent() {
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
 
   useEffect(() => {
-    pingBackend()
-      .then((res) => {
+    // ✅ Ensure CSRF cookie is set before any POST request
+    const initApp = async () => {
+      await getCsrfToken(); // fetch CSRF cookie
+      try {
+        const res = await pingBackend();
         setApiStatus("✅ Backend is Healthy");
         console.log("Backend response:", res.data);
-      })
-      .catch((err) => {
+      } catch (err) {
         setApiStatus("❌ Backend is Unreachable");
         console.error("Error connecting to backend:", err);
-      });
+      }
+    };
+
+    initApp();
   }, []);
 
-  // Minimal layout (no sidebar/topnav/footer) for public pages
+  // ✅ Minimal layout (no sidebar/topnav/footer) for public pages
   const isMinimalLayout = ["/", "/login", "/signup"].includes(location.pathname);
 
+  if (isMinimalLayout) {
+    return (
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+      </Routes>
+    );
+  }
+
+  // ✅ Authenticated routes with full layout
   return (
-    <Routes>
-      {isMinimalLayout ? (
-        <>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-        </>
-      ) : (
-        <Route
-          path="*"
-          element={
-            <Layout
-              isSidebarOpen={isSidebarOpen}
-              toggleSidebar={toggleSidebar}
-              apiStatus={apiStatus}
-            >
-              <MainRoutes />
-            </Layout>
-          }
-        />
-      )}
-    </Routes>
+    <Layout
+      isSidebarOpen={isSidebarOpen}
+      toggleSidebar={toggleSidebar}
+      apiStatus={apiStatus}
+    >
+      <MainRoutes />
+    </Layout>
   );
 }
 

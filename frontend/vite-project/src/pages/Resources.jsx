@@ -39,16 +39,16 @@ export default function Resources() {
   return (
     <Box px={{ base: 4, md: 10 }} py={10}>
       <Stack spacing={6} textAlign="center" mb={10}>
-        <Heading size="xl">📚 StarkBooks Resources & Support</Heading>
+        <Heading size="xl">📚 TwineBooks Resources & Support</Heading>
         <Text fontSize="md" color="gray.600">
-          Learn how to make the most out of StarkBooks with our guides, documentation, and support channels.
+          Learn how to make the most out of TwineBooks with our guides, documentation, and support channels.
         </Text>
       </Stack>
 
       <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={8}>
         <ResourceCard
           title="User Guides"
-          description="Step-by-step articles to help you use StarkBooks features with ease."
+          description="Step-by-step articles to help you use TwineBooks features with ease."
           link="#"
         />
         <ResourceCard
@@ -63,7 +63,7 @@ export default function Resources() {
         />
         <ResourceCard
           title="Community Forum"
-          description="Join discussions, ask questions, and share tips with other StarkBooks users."
+          description="Join discussions, ask questions, and share tips with other TwineBooks users."
           link="#"
         />
         <ResourceCard
@@ -73,7 +73,7 @@ export default function Resources() {
         />
         <ResourceCard
           title="Feature Request"
-          description="Suggest improvements or new features you'd like to see in StarkBooks."
+          description="Suggest improvements or new features you'd like to see in TwineBooks."
           link="#"
         />
       </SimpleGrid>

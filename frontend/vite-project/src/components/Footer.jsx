@@ -18,7 +18,7 @@ function Footer() {
     >
       <Flex justify="center" align="center">
         <Text fontSize="xs" color={textColor}> {/* 🔽 Smaller text */}
-          © {new Date().getFullYear()} StarkEngine. All rights reserved.
+          © {new Date().getFullYear()} TwineCapital. All rights reserved.
         </Text>
       </Flex>
     </Box>

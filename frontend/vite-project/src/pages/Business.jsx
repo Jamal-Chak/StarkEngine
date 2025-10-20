@@ -7,13 +7,13 @@ import {
 const Business = () => {
   return (
     <Box p={6}>
-      <Heading mb={4}>🏢 Business Registration</Heading>
-      <Text mb={4}>Register your organization to get started with StarkEngine. You can invite team members after setup.</Text>
+  <Heading mb={4}>🏢 Business Registration</Heading>
+  <Text mb={4}>Register your organization to get started with TwineCapital. You can invite team members after setup.</Text>
 
       <VStack spacing={4} align="stretch" maxW="400px">
         <FormControl>
           <FormLabel>Business Name</FormLabel>
-          <Input placeholder="e.g. Stark Enterprises" />
+          <Input placeholder="e.g. Twine Enterprises" />
         </FormControl>
         <FormControl>
           <FormLabel>Industry</FormLabel>

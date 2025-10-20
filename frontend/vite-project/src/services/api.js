@@ -42,6 +42,8 @@ export const fetchTransactions = () => api.get('/transactions');
 // ✅ Invoices
 export const createInvoice = (data) => api.post('/invoices', data);
 export const getInvoice = (invoiceId) => api.get(`/invoices/${invoiceId}`);
+export const draftInvoice = (data) => api.post('/invoices/draft', data);
+export const getAIJobStatus = (jobId) => api.get(`/ai/status/${jobId}`);
 
 // ✅ Expandable endpoints
 // export const updateInvoice = (id, data) => api.put(`/invoices/${id}`, data);

@@ -13,8 +13,15 @@ export default defineConfig({
         // ❌ DO NOT rewrite the path – backend expects /api/v1/...
         // rewrite: path => path.replace(/^\/api/, ''), // <-- REMOVE this line
       },
+      // Proxy auth endpoints so frontend can call /auth/* without CORS
+      '/auth': {
+        target: 'http://localhost:5000',
+        changeOrigin: true,
+        secure: false,
+      },
     },
-    port: 5174,
+    // use 5175 by default to avoid conflicts with another process on 5174
+    port: 5175,
     strictPort: true,
     open: true,
   },

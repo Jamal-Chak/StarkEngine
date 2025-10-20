@@ -1,4 +1,3 @@
-// src/MainRoutes.jsx
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
@@ -20,6 +19,9 @@ import Reports from './pages/Reports';
 import Users from './pages/Users';
 import Business from './pages/Business';
 import Support from './pages/Support';
+
+// 🔌 Import Django CRM Plugin (make sure index.jsx exports default)
+import DjangoCRMPlugin from './plugins/djangoCRM';
 
 function MainRoutes() {
   return (
@@ -49,6 +51,9 @@ function MainRoutes() {
       <Route path="/partners" element={<Partners />} />
       <Route path="/resources" element={<Resources />} />
       <Route path="/pricing" element={<Pricing />} />
+
+      {/* 🔌 Plugin: Django CRM */}
+      <Route path="/plugins/django-crm" element={<DjangoCRMPlugin />} />
 
       {/* Optional: 404 Fallback */}
       {/* <Route path="*" element={<NotFound />} /> */}

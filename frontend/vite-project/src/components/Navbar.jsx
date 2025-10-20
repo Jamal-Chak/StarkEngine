@@ -33,12 +33,11 @@ function Navbar({ onToggleSidebar }) {
 
   return (
     <Box
-      bg={bg}
+      bg="transparent"
       px={{ base: 4, md: 8 }}
       py={3}
-      borderBottom="1px"
-      borderColor={borderColor}
-      shadow="sm"
+      borderBottom="0"
+      shadow="none"
       position="sticky"
       top="0"
       zIndex="1000"
@@ -56,16 +55,12 @@ function Navbar({ onToggleSidebar }) {
         />
 
         {/* Logo */}
-        <Heading size="md" color="blue.500" mr={6}>
-          📘 StarkBooks
+        <Heading size="md" color="brand.500" mr={6}>
+          📘 TwineBooks
         </Heading>
 
         {/* Center Nav */}
-        <HStack
-          as="nav"
-          spacing={5}
-          display={{ base: 'none', md: 'flex' }}
-        >
+        <HStack as="nav" spacing={5} display={{ base: 'none', md: 'flex' }}>
           {navLinks.map((link) => (
             <ChakraLink
               as={RouterLink}
@@ -82,7 +77,7 @@ function Navbar({ onToggleSidebar }) {
 
         <Spacer />
 
-        {/* Right: Removed Sign In / Sign Up */}
+        {/* Right: future auth buttons / profile */}
       </Flex>
     </Box>
   );

@@ -9,22 +9,24 @@ import {
   Collapse,
   useColorModeValue,
   Tooltip,
+  Divider,
 } from '@chakra-ui/react';
 import {
   FaHome,
   FaFileInvoice,
   FaUsers,
-  FaCog,
   FaBars,
   FaPlusCircle,
   FaFolderOpen,
   FaChartBar,
   FaBuilding,
   FaLifeRing,
+  FaProjectDiagram, // Django CRM icon
 } from 'react-icons/fa';
 
+// Core navigation items
 const navItems = [
-  { label: 'Dashboard', icon: FaHome, to: '/' },
+  { label: 'Dashboard', icon: FaHome, to: '/dashboard' },
   { label: 'Invoices', icon: FaFileInvoice, to: '/invoices' },
   { label: 'Create Invoice', icon: FaPlusCircle, to: '/create-invoice' },
   { label: 'Documents', icon: FaFolderOpen, to: '/documents' },
@@ -33,7 +35,11 @@ const navItems = [
   { label: 'Business', icon: FaBuilding, to: '/business' },
   { label: 'Support', icon: FaLifeRing, to: '/support' },
   { label: 'Reports', icon: FaChartBar, to: '/reports' },
-  
+];
+
+// Plugin navigation items
+const pluginItems = [
+  { label: 'Django CRM', icon: FaProjectDiagram, to: '/plugins/django-crm' },
 ];
 
 function Sidebar({ isOpen }) {
@@ -46,7 +52,7 @@ function Sidebar({ isOpen }) {
   return (
     <Box
       as="aside"
-      w={collapsed ? '60px' : '200px'}
+      w={collapsed ? '60px' : '220px'}
       h="100vh"
       bg={bg}
       borderRight="1px solid"
@@ -74,9 +80,7 @@ function Sidebar({ isOpen }) {
         px={2}
         pb={4}
         sx={{
-          '&::-webkit-scrollbar': {
-            width: '6px',
-          },
+          '&::-webkit-scrollbar': { width: '6px' },
           '&::-webkit-scrollbar-thumb': {
             backgroundColor: 'gray.400',
             borderRadius: '4px',
@@ -84,6 +88,7 @@ function Sidebar({ isOpen }) {
         }}
       >
         <VStack spacing={2} align="stretch">
+          {/* Core nav items */}
           {navItems.map((item) => (
             <Tooltip
               key={item.label}
@@ -103,6 +108,53 @@ function Sidebar({ isOpen }) {
                   gap: '12px',
                   textDecoration: 'none',
                   color: 'inherit',
+                })}
+              >
+                <HStack spacing={3}>
+                  <item.icon />
+                  <Collapse in={!collapsed} animateOpacity style={{ width: '100%' }}>
+                    <Text isTruncated>{item.label}</Text>
+                  </Collapse>
+                </HStack>
+              </NavLink>
+            </Tooltip>
+          ))}
+
+          {/* Divider / Plugins heading */}
+          <Divider my={3} />
+          {!collapsed && (
+            <Text
+              fontSize="xs"
+              fontWeight="bold"
+              textTransform="uppercase"
+              color="gray.500"
+              px={2}
+              mb={1}
+            >
+              Plugins
+            </Text>
+          )}
+
+          {/* Plugin nav items */}
+          {pluginItems.map((item) => (
+            <Tooltip
+              key={item.label}
+              label={collapsed ? item.label : ''}
+              placement="right"
+              hasArrow
+              openDelay={400}
+            >
+              <NavLink
+                to={item.to}
+                style={({ isActive }) => ({
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  borderRadius: '6px',
+                  padding: '8px',
+                  textDecoration: 'none',
+                  color: isActive ? '#22543D' : '#276749', // green text
+                  backgroundColor: isActive ? '#C6F6D5' : 'transparent', // green bg
                 })}
               >
                 <HStack spacing={3}>

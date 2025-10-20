@@ -93,9 +93,9 @@ function Dashboard() {
   return (
     <Box px={6} py={4}>
       {/* Welcome */}
-      <Heading size="lg" mb={2} color="blue.500">
-        📘 Welcome to StarkBooks
-      </Heading>
+        <Heading size="lg" mb={2} color="blue.500">
+          📘 Welcome to TwineCapital
+        </Heading>
       <Text mb={6} fontSize="md" color={textColor}>
         Let’s get your accounting up and running in no time!
       </Text>

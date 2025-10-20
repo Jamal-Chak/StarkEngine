@@ -1,6 +1,6 @@
 // src/components/layout/TopNav.jsx
 import React from "react";
-import { Box, Flex, Spacer, Link as ChakraLink, Button } from "@chakra-ui/react";
+import { Box, Flex, Spacer, Link as ChakraLink, Button, HStack, Text } from "@chakra-ui/react";
 import { Link, useLocation } from "react-router-dom";
 
 function TopNav() {
@@ -13,29 +13,33 @@ function TopNav() {
   ];
 
   return (
-    <Box bg="gray.800" px={4} py={2} color="white" boxShadow="md">
+    <Box bg="white" px={{ base: 4, md: 8 }} py={3} boxShadow="sm">
       <Flex align="center">
-        <Box fontWeight="bold" fontSize="lg">
-          StarkEngine
-        </Box>
+        <HStack spacing={4}>
+          <Box bg="brand.500" color="white" px={3} py={1} borderRadius="md" fontWeight="bold">
+            TwineCapital
+          </Box>
+          <Text color="gray.500" fontSize="sm">Accounting · AI Invoices</Text>
+        </HStack>
+
         <Spacer />
-        <Flex gap={4}>
+        <HStack spacing={4} display={{ base: 'none', md: 'flex' }}>
           {navLinks.map((link) => (
             <ChakraLink
               key={link.to}
               as={Link}
               to={link.to}
-              fontWeight={location.pathname === link.to ? "bold" : "normal"}
-              color={location.pathname === link.to ? "blue.300" : "gray.200"}
-              _hover={{ textDecoration: "underline" }}
+              fontWeight={location.pathname === link.to ? 'bold' : 'normal'}
+              color={location.pathname === link.to ? 'brand.600' : 'gray.600'}
+              _hover={{ textDecoration: 'none', color: 'brand.500' }}
             >
               {link.label}
             </ChakraLink>
           ))}
-          <Button colorScheme="red" size="sm">
+          <Button variant="solidPrimary" size="sm">
             Logout
           </Button>
-        </Flex>
+        </HStack>
       </Flex>
     </Box>
   );

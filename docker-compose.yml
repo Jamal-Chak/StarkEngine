@@ -1,0 +1,47 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-twinecapital}
+      POSTGRES_USER: ${POSTGRES_USER:-twine}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-twinepass}
+    ports:
+      - '5432:5432'
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    command: gunicorn -w 4 -b 0.0.0.0:5000 backend.app:app
+    ports:
+      - '5000:5000'
+    env_file:
+      - ./.env
+    environment:
+      # Compose variable expansion builds DATABASE_URL from env_file values
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-twine}:${POSTGRES_PASSWORD:-twinepass}@db:5432/${POSTGRES_DB:-twinecapital}
+      - SECRET_KEY=${SECRET_KEY:-dev-secret}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    depends_on:
+      - db
+    volumes:
+      - ./backend:/app:delegated
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - '6379:6379'
+
+  frontend:
+    image: node:18
+    working_dir: /app
+    ports:
+      - '5173:5173'
+    command: sh -lc "npm install && npm run dev -- --host 0.0.0.0"
+    volumes:
+      - ./frontend/vite-project:/app:delegated
+      - /app/node_modules
+
+volumes:
+  db_data:
